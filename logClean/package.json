@@ -1,0 +1,14 @@
+{
+  "name": "log-cleaner-tool",
+  "version": "1.0.0",
+  "description": "批量清除JS日志工具",
+  "main": "batch-log-cleaner.js",
+  "bin": {
+    "clean-log": "./batch-log-cleaner.js"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "glob": "^13.0.6",
+    "progress": "^2.0.3"
+  }
+}
