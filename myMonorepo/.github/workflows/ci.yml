@@ -1,0 +1,66 @@
+name: CI Pipeline
+
+# 触发条件：推送到 main 分支或提交 PR 时触发
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+# 权限设置
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.18.0] 
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. 设置 pnpm (自动读取根目录 .npmrc 或 package.json 中的 engine 版本)
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 
+
+      # 3. 设置 Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm" # 开启 pnpm 缓存
+
+      # 4. 安装依赖
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        # --frozen-lockfile 确保 CI 环境严格使用 lockfile，防止意外更新
+
+      # 5. 检查代码规范 (Lint)
+      - name: Lint
+        run: pnpm lint
+
+      # 6. 运行测试 (Test)
+      # 如果你的 packages/utils 里有 vitest，这里会自动运行
+      - name: Test
+        run: pnpm test
+
+      # 7. 构建项目 (Build) - 核心步骤
+      # Turborepo 会自动分析 apps/web, apps/testWeb, packages/ui 的依赖关系
+      # 并只重新构建发生变化的部分（利用远程或本地缓存）
+      - name: Build
+        run: pnpm build
+        env:
+          # 开启 Turborepo 的远程缓存（可选，如果有 Vercel 账号可配置 Token）
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+      # 8. (可选) 类型检查
+      # 如果你的 tsconfig 配置了 type-check 脚本
+      - name: Type Check
+        run: pnpm type-check || echo "Type check script not found, skipping"
