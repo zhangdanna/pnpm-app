@@ -7,15 +7,18 @@ find the full documentation for it [in our repository](https://github.com/change
 We have a quick list of common questions to get you started engaging with this project in
 [our documentation](https://github.com/changesets/changesets/blob/main/docs/common-questions.md).
 
-
 # 1. 开发完一个功能后，记录变更
+
 pnpm changeset
 
 # 2. 它会交互式问你：改了哪些包？是 major/minor/patch？
+
 # 3. 生成一个 .md 文件描述变更
 
 # 4. 准备发布时，自动升版本号 + 生成 CHANGELOG
+
 pnpm changeset version
 
 # 5. 发布到 npm（如果需要）
+
 pnpm changeset publish

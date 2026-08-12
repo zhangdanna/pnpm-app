@@ -1,5 +1,5 @@
-import tseslint from '@typescript-eslint/eslint-plugin'
-import tsparser from '@typescript-eslint/parser'
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsparser from '@typescript-eslint/parser';
 
 export default [
   {
@@ -23,4 +23,4 @@ export default [
   {
     ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**'],
   },
-]
+];

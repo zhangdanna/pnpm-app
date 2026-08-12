@@ -1,2 +1,2 @@
 // packages/utils/src/index.ts
-export { formatPrice, formatDate } from './format'
+export { formatPrice, formatDate } from './format';

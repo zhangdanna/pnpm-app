@@ -6,8 +6,8 @@
     "jsx": "react-jsx", // ✅ React 项目必须开启 JSX 支持
     "types": ["vite/client"], // ✅ 让 TS 识别 import.meta.env 等 Vite 特有语法
     "outDir": "./dist",
-    "noEmit": true 
+    "noEmit": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"],
-  "exclude": ["node_modules", "dist", "src/**/*.js",  "src/**/*.d.ts"]
+  "exclude": ["node_modules", "dist", "src/**/*.js", "src/**/*.d.ts"]
 }
